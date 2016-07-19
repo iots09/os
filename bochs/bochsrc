@@ -1,0 +1,12 @@
+# bochsrc
+#
+megs: 1024
+#
+mouse: enabled=1
+#
+floppya: 1_44="../image.img", status=inserted
+  boot: floppy
+#
+log: ubuntuop.txt
+#
+boot: floppy
