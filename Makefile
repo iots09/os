@@ -5,16 +5,14 @@ OPTIONAL_MOUNT = \
     		sudo mount -o loop image.img /media/floppy/; \
 	fi;
 
-boot:
-	nasm -f bin src/boot1.asm -o dist/boot1
+boot: bootsector
+	nasm -f bin src/SysBoot/Stage1/Boot1.asm -o /tmp/boot1
 
 stage2:
-	cd src/ ; nasm -f bin Stage2.asm -o ../dist/STAGE2.SYS
+	cd src/SysBoot/Stage2; nasm -f bin Stage2.asm -o ../../../dist/KRNLDR.SYS
 	@$(OPTIONAL_MOUNT)
-	sudo cp dist/STAGE2.SYS /media/floppy/	
+	sudo cp dist/KRNLDR.SYS /media/floppy/
 	sudo umount /media/floppy
 
 bootsector:
-	dd if=dist/boot1 of=image.img conv=notrunc
-	
-
+	dd if=/tmp/boot1 of=image.img conv=notrunc
